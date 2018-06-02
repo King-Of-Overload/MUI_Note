@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+    <style>
+    	/*点击变蓝色高亮*/
+.mui-table-view-cell.mui-active{
+	background-color: #0062CC;
+}
+    </style>
+</head>
+<body>
+	<!--透明标题栏-->
+<!--当用户向下滚动时，标题栏逐渐由透明转变为不透明；当用户再次向上滚动时，标题栏又从不透明变为透明状态。
+透明标题栏组件比较简单，只需要在header组件上添加.mui-bar-transparent类即可，如下为示例代码-->
+	<header class="mui-bar mui-bar-nav mui-bar-transparent">
+		<h1 class="mui-title">标题</h1>
+	</header>
+	<script type="text/javascript">
+		mui('.mui-bar-transparent').transparent({
+    top: 0,
+    offset: 150,
+    duration: 16
+    //scrollby: document.querySelector('.mui-scroll-wrapper')
+});
+	</script>
+	<!--折叠面板-->
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">面板1</a>
+			<div class="mui-collapse-content">
+				<p>面板1子内容</p>
+			</div>
+		</li>
+	</ul>
+	<!--弹出菜单 定义 通过点击超链接显示-->
+	<a href="#popover" id="openPopover" class="mui-btn mui-btn-primary mui-btn-block">打开弹出菜单</a>
+	<div id="popover" class="mui-popover">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell"><a href="#">Item1</a></li>
+			<li class="mui-table-view-cell"><a href="#">Item2</a></li>
+			<li class="mui-table-view-cell"><a href="#">Item3</a></li>
+			<li class="mui-table-view-cell"><a href="#">Item4</a></li>
+			<li class="mui-table-view-cell"><a href="#">Item5</a></li>
+		</ul>
+	</div>
+	
+	<!--actionsheet   徽章Badges数字角标-->
+	<a href="#sheet1" class="mui-btn mui-btn-primary mui-btn-block">打开actionsheet</a>
+	<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="#">菜单1</a><span class="mui-badge mui-badge-primary">12</span>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="#">菜单2</a><span class="mui-badge mui-badge-success">123</span>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a href="#sheet1"><b>取消</b></a>
+			</li>
+		</ul>
+	</div>
+		<!--按钮-->
+		<button type="button" class="mui-btn mui-btn-success">绿色</button>
+		<button type="button" data-loading-text="提交中" class="mui-btn" data-loading-icon-position="right" id="loadingBtn">确定</button>
+		<script type="text/javascript">
+			mui(document.body).on('tap','#loadingBtn',function(e){
+				mui(this).button('loading');
+				setTimeout(function(){
+					mui(this).button('reset');
+				}.bind(this),2000);
+			});
+		</script>
+		
+		<!--卡片视图cardview-->
+		<div class="mui-card">
+			<div class="mui-card-header mui-card-media">
+					<img src="images/logo.png"/>
+					<div class="mui-media-body">
+						胡一菲
+						<p>发表于 2016-06-30 15:30</p>
+					</div>
+			</div>
+			<div class="mui-card-content">
+				<img src="images/yuantiao.jpg" width="100%" alt=""/>
+			</div>
+			<div class="mui-card-footer">
+				<a class="mui-card-link">喜欢</a>
+				<a class="mui-card-link">评论</a>
+				<a class="mui-card-link">更多</a>
+			</div>
+		</div>
+		<!--复选框(checkbox)-->
+		<div class="mui-checkbox mui-input-row mui-right">
+			<label>复选框</label>
+			<input type="checkbox" checked="" value="Item 1"/>
+		</div>
+		
+		<!--对话框dialog-->
+		<button class="mui-btn mui-btn-warning mui-btn-outlined" id="warningBtn">警告框</button>
+		<script type="text/javascript">
+			mui(document.body).on('tap',"#warningBtn",function(e){
+				mui.alert('不要轻易惹怒胡一菲','提示','确定',null,'div');
+			});
+		</script>
+		<button class="mui-btn mui-btn-success mui-btn-outlined" id="confirmBtn">确认框与toast提示</button>
+		<script type="text/javascript">
+			mui(document.body).on('tap','#confirmBtn',function(e){
+				mui.confirm('婉瑜是个好女孩吗？','提问',['是','否'],function(e){
+					e.index==0?mui.toast('你真有眼光',{duration:'long',type:'div'}):mui.toast('讨厌，婉瑜恨你',{duration:'long',type:'div'})
+				},'div');
+			});
+		</script>
+		<!--slide轮播组件-->
+		<div class="mui-slider" id="mui-slider">
+			<div class="mui-slider-group">
+				<div class="mui-slider-item">
+				<img src="images/cbd.jpg" width="100%"/>
+			</div>
+			<div class="mui-slider-item" id="item2">
+			</div>
+			<div class="mui-slider-item" id="item3">
+			</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var item2Show=false,item3Show=false;
+			document.querySelector('#mui-slider').addEventListener('slide',function(e){
+				if(event.detail.slideNumber===1&&!item2Show){
+					var content='<img src="images/yuantiao.jpg" width="100%"/>';
+					document.getElementById("item2").innerHTML=content;
+					item2Show=true;
+				}else if(event.detail.slideNumber==2&&!item3Show){
+					var content='<img src="images/cbd.jpg" width="100%"/>';
+					document.getElementById("item3").innerHTML=content;
+					item3Show=true;
+				}
+			});
+		</script>
+		
+		<!--图片轮播-->
+		<div class="mui-slider" id="gallery">
+			<div class="mui-slider-group mui-slider-loop">
+				<!--支持循环，需要添加尾部的结点与头部结点-->
+				<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="images/cbd.jpg" width="100%"/></a></div>
+				<div class="mui-slider-item"><a href="#"><img src="images/yuantiao.jpg" width="100%"/></a></div>
+				<div class="mui-slider-item"><a href="#"><img src="images/cbd.jpg" width="100%"/></a></div>
+				<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="images/yuantiao.jpg" width="100%"/></a></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var gallery=mui('#gallery');
+			gallery.slider({interval:5000});//为0不播放
+			//gallery.slider().gotoItem(index);//跳转到第index张图片，index从0开始；
+		</script>
+		<!--栅格系统-->
+		<div class="mui-content">
+			<div class="mui-row">
+				<div class="mui-col-sm-6 mui-col-xs-12" style="padding-right: 20px;">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">Item 1</a>
+					</li>
+				</div>
+				<div class="mui-col-sm-6 mui-col-xs-12">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">Item 1</a>
+					</li>
+				</div>
+			</div>
+		</div>
+		<!--设置padding-->
+		<div class="mui-content">
+    <div class="mui-row">
+        <div class="mui-col-xs-6" style="padding-right: 20px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    Item 1    
+                </a>
+            </li>
+        </div>
+        <div class="mui-col-xs-6">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    Item 1
+                </a>
+            </li>
+        </div>
+    </div>
+</div>
+
+<!--图标-->
+<span class="mui-icon mui-icon-weixin"></span>
+<!--输入表单-->
+<form class="mui-input-group">
+	<div class="mui-input-row">
+		<label>用户名</label>
+		<input type="text" class="mui-input-clear" placeholder="请输入用户名"/>
+	</div>
+	<div class="mui-input-row">
+		<label>密码</label>
+		<input type="password" class="mui-input-password" placeholder="请输入密码"/>
+	</div>
+	<div class="mui-input-row mui-search">
+		<input type="search" class="mui-input-clear" placeholder=""/>
+	</div>
+	<div class="mui-button-row">
+		<button type="button" class="mui-btn mui-btn-primary">确认</button>
+		<button type="button" class="mui-btn mui-btn-danger">取消</button>
+	</div>
+</form>
+<br />
+<!--普通列表-->
+<ul class="mui-table-view">
+    <li class="mui-table-view-cell">Item 1</li>
+    <li class="mui-table-view-cell">Item 2</li>
+    <li class="mui-table-view-cell">Item 3</li>
+</ul>
+<br/>
+<!--添加导航箭头-->
+<ul class="mui-table-view">
+    <li class="mui-table-view-cell">
+        <a class="mui-navigate-right">Item 1</a>
+    </li>
+    <li class="mui-table-view-cell">
+        <a class="mui-navigate-right">Item 2</a>
+    </li>
+    <li class="mui-table-view-cell">
+        <a class="mui-navigate-right">Item 3</a>
+    </li>
+</ul>
+<br />
+<!--数字-->
+<ul class="mui-table-view">
+    <li class="mui-table-view-cell">Item 1 
+        <span class="mui-badge mui-badge-primary">11</span>
+    </li>
+    <li class="mui-table-view-cell">Item 2 
+        <span class="mui-badge mui-badge-success">22</span>
+    </li>
+    <li class="mui-table-view-cell">Item 3 
+        <span class="mui-badge">33</span>
+    </li>
+</ul>
+<br />
+<!--图文列表-->
+<ul class="mui-table-view">
+	<li class="mui-table-view-cell mui-media">
+		<a href="#">
+			<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg"/>
+			<div class="mui-media-body">
+				幸福
+				<p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+			</div>
+		</a>
+	</li>
+	<li class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <img class="mui-media-object mui-pull-left" src="images/muwu.jpg">
+            <div class="mui-media-body">
+                木屋
+                <p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+            </div>
+        </a>
+    </li>
+    <li class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <img class="mui-media-object mui-pull-left" src="images/cbd.jpg">
+            <div class="mui-media-body">
+                CBD
+                <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+            </div>
+        </a>
+    </li>
+</ul>
+<br />
+<!--数字输入框-->
+<div class="mui-numbox" data-numbox-step="1" data-numbox-min='0' data-numbox-max='100'>
+	<button class="mui-btn-numbox-minus" type="button">-</button>
+	<input class="mui-numbox-input" type="number"/>
+	<button class="mui-btn-numbox-plus" type="button">+</button>
+</div>
+<br />
+<!--进度条-->
+<div id="demo1" class="mui-progressbar">
+	<span></span>
+</div>
+<!--无限循环进度条-->
+<div id="demo2" class="mui-progressbar mui-progressbar-infinite">
+	<span></span>
+</div>
+<script type="text/javascript">
+	mui("#demo2").progressbar().show();
+	mui("#demo2").progressbar().setProgress(50);
+	mui("#demo1").progressbar({progress:20}).show();
+	mui("#demo1").progressbar().setProgress(10);
+</script>
+<!--页面顶部进度条-->
+<!--
+	body>.mui-progressbar{
+	top:0
+}
+-->
+<!--radio组件-->
+<div class="mui-input-row mui-radio">
+	<label>radio</label>
+	<input name="radio1" type="radio">
+</div>
+<br />
+<ul class="mui-table-view mui-table-view-radio">
+	<li class="mui-table-view-cell">
+		<a class="mui-navigate-right">Item 1</a>
+	</li>
+	<li class="mui-table-view-cell mui-selected">
+		<a class="mui-navigate-right">Item 2</a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a class="mui-navigate-right">Item 3</a>
+	</li>
+</ul>
+<script type="text/javascript">
+	var list = document.querySelector('.mui-table-view.mui-table-view-radio');
+list.addEventListener('selected',function(e){
+	console.log("当前选中的为："+e.detail.el.innerText);
+});
+</script>
+<br />
+<!--滑块-->
+<div class="mui-input-row mui-input-range">
+	<label>Range</label>
+	<input type="range" min="0" max="100">
+</div>
+<br />
+<br />
+<!-- 简洁模式开关关闭状态 -->
+<div class="mui-switch mui-switch-mini">
+  <div class="mui-switch-handle"></div>
+</div>
+<!-- 简洁模式开关打开状态 -->
+<div class="mui-switch mui-switch-mini mui-active">
+  <div class="mui-switch-handle"></div>
+</div>
+<br />
+
+<button class="mui-btn mui-btn-blue mui-btn-outlined" type="button" id="bPage">跳转到B页面</button>
+<script type="text/javascript">
+	document.getElementById('bPage').addEventListener('tap',function(){
+		mui.openWindow({
+			url:'cehua.html',
+			id:'cehua',
+			show:{
+				duration:3000
+			}
+		});
+	});
+</script>
+<!--
+	
+-->
+</body>
+</html>
